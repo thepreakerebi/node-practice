@@ -1,15 +1,10 @@
-const fs = require('node:fs');
+const http = require('node:http');
 
-const readerableStream = fs.createReadStream('./data.json', {
-    encoding: 'utf-8',
-    highWaterMark: 2
+const server = http.createServer((req, res) => {
+    res.writeHead(200, {"Content-Type": "text/plain"});
+    res.end('Hello world');
 });
 
-const writeableStream = fs.createWriteStream('./data2.json');
-
-readerableStream.pipe(writeableStream);
-
-// readerableStream.on('data', chunk => {
-//     console.log(chunk);
-//     writeableStream.write(chunk);
-// })
+server.listen(3000, () => {
+    console.log('Server is running on port 3000');
+})
