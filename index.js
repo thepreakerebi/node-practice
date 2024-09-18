@@ -7,7 +7,9 @@ const readerableStream = fs.createReadStream('./data.json', {
 
 const writeableStream = fs.createWriteStream('./data2.json');
 
-readerableStream.on('data', chunk => {
-    console.log(chunk);
-    writeableStream.write(chunk);
-})
+readerableStream.pipe(writeableStream);
+
+// readerableStream.on('data', chunk => {
+//     console.log(chunk);
+//     writeableStream.write(chunk);
+// })
