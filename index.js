@@ -1,11 +1,16 @@
-const path = require("node:path");
+const EventEmmiter = require('node:events');
 
-console.log(path.basename(__filename));
-console.log(path.basename(__dirname));
+const emitter = new EventEmmiter();
 
-console.log(path.extname(__filename));
-console.log(path.extname(__dirname));
+emitter.on("order-pizza", (size, topping) => {
+    console.log(`${size} pizza ordered with ${topping}`);
+});
 
-console.log(path.parse(__filename));
+emitter.on('order-pizza', size => {
+    if (size === 'large') {
+        console.log('comes with complimentary drink');
+    }
+});
 
+emitter.emit('order-pizza', "large", 'mushroom');
 
