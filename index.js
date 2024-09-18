@@ -1,47 +1,13 @@
-const fs = require('node:fs/promises');
+const fs = require('node:fs');
 
-// fs.readFile('./data.json', 'utf-8')
-//     .then(data => {
-//         console.log(data);
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     })
+const readerableStream = fs.createReadStream('./data.json', {
+    encoding: 'utf-8',
+    highWaterMark: 2
+});
 
-const readFile = async () => {
-    try {
-        const data = await fs.readFile('./data.json', 'utf-8');
-        console.log(data);
-    } catch (err) {
-        console.log(err);
-    }
-}
+const writeableStream = fs.createWriteStream('./data2.json');
 
-readFile();
-
-// console.log('first');
-
-// const fileContent = fs.readFileSync('./data.json', "utf-8");
-
-// console.log(fileContent);
-
-// console.log('second');
-
-// fs.readFile('./data.json', 'utf-8', (error, data) => {
-//     if (error) {
-//         console.log(error);
-//     } else {
-//         console.log(data);
-//     }
-// });
-
-// console.log('third');
-
-// fs.writeFileSync('./new-file.txt', 'Hello world');
-// fs.writeFile('./new-file.txt', ' Hellow again', {flag: 'a'}, error => {
-//     if (error) {
-//         console.log(error);
-//     } else {
-//         console.log('file written');
-//     }
-// });
+readerableStream.on('data', chunk => {
+    console.log(chunk);
+    writeableStream.write(chunk);
+})
