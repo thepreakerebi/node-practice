@@ -1,31 +1,28 @@
-const EventEmmiter = require('node:events');
-const PizzaShop = require('./pizza-shop');
-const DrinkMachine = require('./drink-machine');
+const fs = require('node:fs');
 
-const drinkMachine = new DrinkMachine();
+console.log('first');
 
-const pizzaShop = new PizzaShop();
+const fileContent = fs.readFileSync('./data.json', "utf-8");
 
+console.log(fileContent);
 
-pizzaShop.on('order', (size, topping) => {
-    console.log(`${size} pizza ordered with ${topping}`);
-    drinkMachine.serveDrink(size);
-})
+console.log('second');
 
-pizzaShop.order('medium', 'mushroom');
-pizzaShop.displayOrderNumber();
+fs.readFile('./data.json', 'utf-8', (error, data) => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log(data);
+    }
+});
 
-// const emitter = new EventEmmiter();
+console.log('third');
 
-// emitter.on("order-pizza", (size, topping) => {
-//     console.log(`${size} pizza ordered with ${topping}`);
-// });
-
-// emitter.on('order-pizza', size => {
-//     if (size === 'large') {
-//         console.log('comes with complimentary drink');
-//     }
-// });
-
-// emitter.emit('order-pizza', "large", 'mushroom');
-
+fs.writeFileSync('./new-file.txt', 'Hello world');
+fs.writeFile('./new-file.txt', ' Hellow again', {flag: 'a'}, error => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('file written');
+    }
+});
